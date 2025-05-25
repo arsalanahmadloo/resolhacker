@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>رسول چهل‌پنجه - مدارک</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #00ff00;
+      font-family: 'Share Tech Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }h1 {
+  font-size: 2em;
+  animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
+}
+
+.typewriter {
+  overflow: hidden;
+  border-right: .15em solid #00ff00;
+  white-space: nowrap;
+  margin: 20px auto;
+  letter-spacing: .1em;
+  animation:
+    typing 3.5s steps(30, end),
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #00ff00; }
+}
+
+input {
+  padding: 10px;
+  border: none;
+  background-color: #001100;
+  color: #00ff00;
+  font-family: inherit;
+  font-size: 1.1em;
+  margin-top: 20px;
+  width: 80%;
+  text-align: center;
+}
+
+button {
+  background-color: #003300;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 10px 20px;
+  margin-top: 15px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.keyboard {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
+}
+
+.key {
+  padding: 10px;
+  background-color: #002200;
+  border: 1px solid #00ff00;
+  text-align: center;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+  <h1 class="typewriter">رسول چهل‌پنجه | ورود به مدارک هکری...</h1>
+  <input type="text" id="username" placeholder="نام کاربری خود را وارد کنید">
+  <button onclick="startHacking()">ورود</button>
+  <div class="keyboard" id="keyboard"></div>  <script>
+    const keys = 'ضصثقفغعهخحجچشسیبلاتنمکگظطزرذدپو1234567890'.split('');
+    const keyboard = document.getElementById('keyboard');
+    const input = document.getElementById('username');
+
+    keys.forEach(key => {
+      const div = document.createElement('div');
+      div.classList.add('key');
+      div.textContent = key;
+      div.onclick = () => input.value += key;
+      keyboard.appendChild(div);
+    });
+
+    function startHacking() {
+      if (input.value.trim() === '') {
+        alert('لطفاً نام کاربری وارد کنید');
+        return;
+      }
+      alert('ورود موفق! در حال انتقال به مدارک هکری رسول چهل‌پنجه...');
+      // بعداً به فایل اصلی منتقل می‌شه
+    }
+  </script></body>
+</html>
