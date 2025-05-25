@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <title>رسول چهل‌پنجه - مدارک</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #00ff00;
+      font-family: 'Share Tech Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2em;
+      animation: flicker 2s infinite alternate;
+      z-index: 10;
+      user-select: none;
+    }
+
+    @keyframes flicker {
+      from { opacity: 0.8; }
+      to { opacity: 1; }
+    }
+
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #00ff00;
+      white-space: nowrap;
+      margin: 20px auto;
+      letter-spacing: .1em;
+      animation:
+        typing 3.5s steps(30, end),
+        blink-caret .75s step-end infinite;
+      user-select: none;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #00ff00; }
+    }
+
+    input {
+      padding: 10px;
+      border: none;
+      background-color: #001100;
+      color: #00ff00;
+      font-family: inherit;
+      font-size: 1.1em;
+      margin-top: 20px;
+      width: 80%;
+      text-align: center;
+      z-index: 10;
+      position: relative;
+    }
+
+    button {
+      background-color: #003300;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      padding: 10px 20px;
+      margin-top: 15px;
+      cursor: pointer;
+      font-family: inherit;
+      z-index: 10;
+      position: relative;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #005500;
+    }
+
+    .keyboard {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 5px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .key {
+      padding: 10px;
+      background-color: #002200;
+      border: 1px solid #00ff00;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    .key:hover {
+      background-color: #004400;
+    }
+
+    /* پنل اصلی مخفی اول */
+    #dashboard {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 90vw;
+      max-width: 900px;
+      height: 80vh;
+      background-color: #001100dd;
+      border: 1px solid #00ff00;
+      border-radius: 10px;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow: hidden;
+      z-index: 15;
+      position: relative;
+    }
+
+    #dashboard h2 {
+      margin: 0 0 15px 0;
+      user-select: none;
+    }
+
+    #tools {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    #tools button {
+      flex: 1 0 120px;
+      min-width: 120px;
+    }
+
+    #terminal {
+      background-color: #001100;
+      border: 1px solid #00ff00;
+      width: 100%;
+      height: 250px;
+      overflow-y: auto;
+      padding: 10px;
+      font-family: 'Share Tech Mono', monospace;
+      white-space: pre-wrap;
+      border-radius: 5px;
+      user-select: text;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+    }
+
+    #teams {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      width: 100%;
+      user-select: none;
+    }
+
+    .team {
+      background-color: #002200;
+      border: 1px solid #00ff00;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      min-width: 100px;
+      text-align: center;
+    }
+    .team:hover {
+      background-color: #004400;
+    }
+
+    /* canvas بارش کد */
+    #matrix {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+
+  <!-- صفحه ورود -->
+  <h1 class="typewriter">رسول چهل‌پنجه | ورود به مدارک هکری...</h1>
+  <input type="text" id="username" placeholder="نام کاربری خود را وارد کنید" autocomplete="off" />
+  <button onclick="startHacking()">ورود</button>
+
+  <div class="keyboard" id="keyboard"></div>
+
+  <!-- پنل اصلی -->
+  <div id="dashboard">
+    <h2>خوش آمدید، <span id="user-display"></span></h2>
+
+    <div id="tools">
+      <button onclick="runTool('ping')">پینگ آی‌پی</button>
+      <button onclick="runTool('password')">ساخت پسورد قوی</button>
+      <button onclick="runTool('base64')">رمزگشایی Base64</button>
+      <button onclick="runTool('whois')">whois دامنه</button>
+      <button onclick="runTool('portscan')">تست پورت</button>
+    </div>
+
+    <div id="terminal"></div>
+
+    <div id="teams">
+      <div class="team">تیم سیمرغ</div>
+      <div class="team">تیم رعد</div>
+      <div class="team">تیم سایبر</div>
+      <div class="team">تیم اژدها</div>
+      <div class="team">تیم سایه</div>
+      <div class="team">تیم زاگرس</div>
+      <div class="team">تیم راسخ</div>
+    </div>
+  </div>
+
+<script>
+  // کیبورد فارسی هکری
+  const keys = 'ضصثقفغعهخحجچشسیبلاتنمکگظطزرذدپو1234567890'.split('');
+  const keyboard = document.getElementById('keyboard');
+  const input = document.getElementById('username');
+
+  keys.forEach(key => {
+    const div = document.createElement('div');
+    div.classList.add('key');
+    div.textContent = key;
+    div.onclick = () => input.value += key;
+    keyboard.appendChild(div);
+  });
+
+  // انیمیشن بارش کد سبز
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
+
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  const letters = 'ضصثقفغعهخحجچشسیبلاتنمکگظطزرذدپو1234567890@#$%^&*'.split('');
+  const fontSize = 14;
+  const columns = Math.floor(width / fontSize);
+
+  let drops = [];
+  for (let i = 0; i < columns; i++) drops[i] = 1;
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = '#00ff00';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters[Math.floor(Math.random() * letters.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+  setInterval(draw, 50);
+
+  // ورود و نمایش پنل
+  function startHacking() {
+    if (input.value.trim() === '') {
+      alert('لطفاً نام کاربری وارد کنید');
+      return;
+    }
+    document.getElementById('user-display').textContent = input.value.trim();
+    document.getElementById('dashboard').style.display = 'flex';
+
+    // مخفی کردن صفحه ورود و کیبورد
+    input.style.display = 'none';
+    keyboard.style.display = 'none';
+    document.querySelector('button').style.display = 'none';
+    document.querySelector('h1').style.display = 'none';
+  }
+
+  const terminal = document.getElementById('terminal');
+
+  function appendOutput(text) {
+    terminal.textContent += text + '\n';
+    terminal.scrollTop = terminal.scrollHeight;
+  }
+
+  // ابزارها
+  function generatePassword(length = 16) {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~';
+    let pass = '';
+    for (let i = 0; i < length; i++) {
+      pass += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return pass;
+  }
+
+  function decodeBase64(input) {
+    try {
+      return atob(input);
+    } catch {
+      return 'رمزگذاری Base64 نامعتبر است';
+    }
+  }
+
+  function ping(ip) {
+    appendOutput(`شروع پینگ به ${ip} ...`);
+    setTimeout(() => {
+      appendOutput(`پینگ موفق! زمان پاسخ: ${Math.floor(Math.random() * 100)}ms`);
+    }, 1000);
+  }
+
+  function whois(domain) {
+    appendOutput(`در حال دریافت اطلاعات دامنه ${domain} ...`);
+    setTimeout(() => {
+      appendOutput(`Whois دامنه ${domain}:\nRegistrar: Example Registrar\nCreation Date: 2020-01-01\nExpiration Date: 2025-01-01`);
+    }, 1500);
+  }
+
+  function portscan(ip) {
+    appendOutput(`شروع اسکن پورت‌های ${ip} ...`);
+    let ports = [21, 22, 80, 443, 8080];
+    let openPorts = [];
+    let count = 0;
+
+    function scanNext() {
+      if (count >= ports.length) {
+        appendOutput('اسکن پورت تمام شد.\nپورت‌های باز: ' + (openPorts.length ? openPorts.join(', ') : 'هیچ‌کدام'));
+        return;
+      }
+      let port = ports[count];
+      appendOutput(`در حال بررسی پورت ${port} ...`);
+      setTimeout(() => {
+        if (Math.random() > 0.5) {
+          openPorts.push(port);
+          appendOutput(`پورت ${port} باز است.`);
+        } else {
+          appendOutput(`پورت ${port} بسته است.`);
+        }
+        count++;
+        scanNext();
+      }, 800);
+    }
+    scanNext();
+  }
+
+  function runTool(tool) {
+    terminal.textContent = '';
+    switch (tool) {
+      case 'ping':
+        let ip = prompt('لطفا آی‌پی وارد کنید:');
+        if (ip) ping(ip);
+        break;
+      case 'password':
+        appendOutput('رمز عبور تولید شده: ' + generatePassword());
+        break;
+      case 'base64':
+        let encoded =
